@@ -1,9 +1,7 @@
 <?php
-// Создаем необходимые папки
 if (!file_exists('data')) mkdir('data');
 if (!file_exists('data/comments')) mkdir('data/comments');
 
-// Обработка формы поста
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
@@ -26,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
     }
 }
 
-// Получаем последние 5 постов
 $posts = [];
 if (file_exists('data/posts.json')) {
     $allPosts = json_decode(file_get_contents('data/posts.json'), true) ?: [];
@@ -85,4 +82,5 @@ if (file_exists('data/posts.json')) {
         <?php endif; ?>
     </div>
 </body>
+
 </html>
