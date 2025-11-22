@@ -1,5 +1,4 @@
 <?php
-// Проверяем ID поста
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header('Location: index.php');
     exit;
@@ -7,7 +6,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $postId = $_GET['id'];
 
-// Получаем пост
 $post = null;
 if (file_exists('data/posts.json')) {
     $allPosts = json_decode(file_get_contents('data/posts.json'), true) ?: [];
@@ -24,7 +22,6 @@ if (!$post) {
     exit;
 }
 
-// Обработка формы комментария
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
     $author = trim($_POST['author'] ?? 'Аноним');
     $comment = trim($_POST['comment']);
@@ -46,12 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
     }
 }
 
-// Получаем комментарии для этого поста
 $comments = [];
 $commentFile = "data/comments/{$postId}.json";
 if (file_exists($commentFile)) {
     $comments = json_decode(file_get_contents($commentFile), true) ?: [];
-    $comments = array_reverse($comments); // Новые комментарии сверху
+    $comments = array_reverse($comments); 
 }
 ?>
 
@@ -106,4 +102,5 @@ if (file_exists($commentFile)) {
         </div>
     </div>
 </body>
+
 </html>
